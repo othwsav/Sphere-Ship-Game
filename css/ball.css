@@ -1,0 +1,213 @@
+/* general body styling */
+body{
+    overflow: hidden;
+    margin: 0;
+    font-family: "Montserrat" !important;
+}
+
+/* the announce div and all its sub divs styling */
+/* Start */
+
+.anounce{
+    height: 100vh;
+    width: 100vw;
+    background: rgb(101, 101, 101);
+    font-size: 2vw;
+    position: absolute;
+    color: white;
+    font-weight: 900;
+    text-align: center;
+    z-index: 10;
+}
+.anounce h1,
+.anounce h4,
+.anounce ol li,
+.anounce button{
+    opacity: 0;
+}
+
+/* starting announce  */
+
+.anounce .start{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.anounce .start h1{
+    margin-top: 0;
+    font-size: 5vw;
+}
+.anounce .start .rules{
+    text-align: left;
+    font-weight: 100 !important;
+}
+.anounce .start .rules h4{
+    font-size: 3vw;
+    margin: 1vh 12vw;
+}
+.anounce .start .rules ol{
+    margin: 1vh 10vw 5vh;
+}
+.anounce .start button{
+    padding: 2vh 10vw;
+    font-size: 3.5vw;
+    cursor: pointer;
+    font-family: "Montserrat" !important;
+    border-radius: 15px;
+    border: 5px solid #101010;
+    transition: all .5s ease-out;
+}
+.anounce .start button:hover{
+    box-shadow: 0px 0px 20px 0px #dfdfdf;
+}
+.anounce .start button:active {
+    box-shadow: 0px 0px 20px 0px #000000;
+    border: 5px solid #9e9e9e !important;
+}
+.anounce .start button:focus{
+    outline: none;
+}
+.anounce>div{
+    width: 100%;
+    height: 100%;
+}
+
+/* countdown announce */
+
+.anounce .countdown, .anounce .results{
+    display: none;
+}
+.anounce .countdown{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 250px;
+    font-weight: 900;
+    transition: all 2s;
+}
+.anounce .countdown span{
+    position: absolute;
+    display: none;
+}
+
+/* End */
+
+
+
+
+
+/* Game Canvas styling and all the divs inside Waves, Steps, Ball */
+/* Start */
+.gamecanvas{
+    width: 85vw;
+    height: 85vh;
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    position: relative;
+    top: calc(7.5vh - 2px);
+    cursor: pointer;
+    overflow: hidden;
+}
+/* gamecanvas>Waves */
+.gamecanvas .waves{
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    width: 100%;
+    top: calc(-5vh - 2px);
+}
+.gamecanvas .waves .enemy{
+    width: .2%;
+    height: 5vh;
+    background: black;
+    display: none;
+    position: relative;
+}
+.gamecanvas .waves .enemy.visible{
+    display: block !important;
+}
+/* gamecanvas>Steps */
+.gamecanvas #steps {
+    height: 100%;
+    width: 100%;
+}
+.gamecanvas #steps .dot {
+    height: 2px;
+    width: 2px;
+    border-radius: 100%;
+    position: absolute;
+    z-index: 0;
+    animation: sploosh 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: transparent;
+}
+
+@keyframes sploosh {
+    0% {
+        box-shadow: 0 0 0 0px rgba(66, 166, 223, 0.7);
+        background: rgba(66, 166, 223, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 0 0 30px rgba(66, 166, 223, 0);
+        background: rgba(66, 166, 223, 0);
+    }
+}
+/* gamecanvas>Ball */
+.gamecanvas .ball{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 80%;
+    left: calc(50% - 15px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 10px 10px, #d35400, #210d00);
+    transition-timing-function: linear;
+}
+
+/* End */
+
+
+
+
+
+
+
+/* Lives and Score and Game Over page*/
+/* Start */
+
+/* Lives */
+.lives{
+    position: absolute;
+    top: 1vh;
+    left: 1vw;
+    font-size: 20px;
+}
+/* score */
+.score{
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+    font-size: 20px;
+}
+/* Game Over */
+.gameover{
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    font-weight: 900;
+    color: #c0392b;
+    font-size: 0px;
+    background: black;
+    display: none;
+    cursor: default;
+    flex-direction: column;
+}
+.gameover>span{
+    color: white;
+}
+/* End */
