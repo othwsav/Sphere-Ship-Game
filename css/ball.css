@@ -119,11 +119,12 @@ body{
     top: calc(-5vh - 2px);
 }
 .gamecanvas .waves .enemy{
-    width: .2%;
+    width: .5%;
     height: 5vh;
     background: black;
     display: none;
     position: relative;
+    border-radius: 0 0 5px 5px;
 }
 .gamecanvas .waves .enemy.visible{
     display: block !important;
@@ -174,7 +175,7 @@ body{
 
 
 
-/* Lives and Score and Game Over page*/
+/* Lives, Score, Game Over page and music switch*/
 /* Start */
 
 /* Lives */
@@ -209,5 +210,27 @@ body{
 }
 .gameover>span{
     color: white;
+}
+.musicswitch {
+    position: absolute;
+    cursor: pointer;
+    width: 2.5vw;
+    height: 2.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 15vh;
+    left: 1vw;
+    border: 5px solid #2980b9;
+    background: #2c3e50;
+    color: white;
+    border-radius: 50%;
+}
+.musicswitch .red{
+    color: #e74c3c;
+}
+.musicswitch i{
+    font-size: 2vw;
+    transition: all .5s;
 }
 /* End */

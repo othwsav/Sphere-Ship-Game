@@ -1,16 +1,24 @@
 $(document).ready(function () {
     // This is the first animation that displays menu and rules and start button:
-    $(".anounce h1, .anounce h4, .anounce ol li, .anounce button").each(function (i) {
-        $(this).delay(30 * i + 1000).animate({
+    $(".anounce .start h1, .anounce .start h4, .anounce .start ol li, .anounce .start button").each(function (i) {
+        $(this).delay(3000 * i + 1000).animate({
             opacity: "1"
-        }, 10);
+        }, 500);
     });
-
+    // I added this to make it faster to enter a game for the ones who've read the rules.
+    $(".anounce .start").click(function (){
+        $(this).find("button").css("opacity","1");
+    });
     // What happens if The user clicks on start game button:
     $(".anounce .start button").on("click", function () {
         //fading out start menu.
         $(".anounce .start").fadeOut(400, function () {
-            // running a countdown from 3 then fadeout the whole menu to start the game.
+            // running a countdown from 3 then fade out the whole menu to start the game.
+            $(".anounce").click(function (){
+                $(this).fadeOut();
+                duringThePlay.loop = true;
+                duringThePlay.play();
+            });
             $(".anounce .countdown").css("display", "flex").children().each(function (i) {
                 $(this).delay(1000 * i + 500).fadeIn(500).fadeOut(500, function () {
                     if (i == 2) {
@@ -25,14 +33,14 @@ $(document).ready(function () {
         let ballInitPos = [$(".ball").position().left, $(".ball").position().top],
             score = 0,
             lives = 3,
-            speed = score * 5 + 120,
-            enemyWidth = 0.2,
-            enemySpeed = score + 150,
+            speed = score + 120,
+            enemyWidth = 0.5,
+            enemySpeed = score / 2 + 150,
             numOfEnemies = 100 / enemyWidth,
-            numOfVisibleEnemies = (score * 10 + 50 > numOfEnemies) ? numOfEnemies : (score * 10 + 50),
-            timeBetweenAttacks = (1000 - score * 20 >= 50) ? 1000 - score * 20 : 100,
+            numOfVisibleEnemies = (Math.floor(score * 1.2) + 50 > numOfEnemies) ? numOfEnemies : Math.floor(score * 1.2) + 50,
+            timeBetweenAttacks = (500 - Math.ceil(score * 1.8) >= 100) ? 500 - Math.ceil(score * 1.8) : 100,
             attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies)),
-            s = 1,
+            s = 0,
             toStartAttacking = true;
         const easingFunctions = ["linear", "swing", "easeInQuad", "easeOutQuad", "easeInOutQuad", "easeInCubic", "easeOutCubic", "easeInOutCubic", "easeInQuart", "easeOutQuart", "easeInOutQuart", "easeInQuint", "easeOutQuint", "easeInOutQuint", "easeInExpo", "easeOutExpo", "easeInOutExpo", "easeInSine", "easeOutSine", "easeInOutSine", "easeInCirc", "easeOutCirc", "easeInOutCirc", "easeInElastic", "easeOutElastic", "easeInOutElastic", "easeInBack", "easeOutBack", "easeInOutBack", "easeInBounce", "easeOutBounce", "easeInOutBounce"],
             gameOverAud = new Audio("../music/Game Over.mp3"),
@@ -40,13 +48,18 @@ $(document).ready(function () {
             gainPointAud = new Audio("../music/You gained a point.mp3"),
             depassingWaveAud = new Audio("../music/You passed a wave.mp3"),
             duringThePlay = new Audio("../music/during the play.m4a");
+        // volume switcher code.
+        $(".musicswitch").click(function () {
+            $(this).find("i").toggleClass("red").text(($(this).find("i").text() == "volume_up") ? "volume_off" : "volume_up");
+            duringThePlay.volume = (duringThePlay.volume == 0) ? 1 : 0
+        });
         // a function that restarts or change dynamic variables.
         function restartingVars() {
-            s = 1;
-            speed = score * 5 + 120;
-            enemySpeed = score + 150;
-            numOfVisibleEnemies = (score * 10 + 50 > numOfEnemies) ? numOfEnemies : (score * 10 + 50);
-            timeBetweenAttacks = (1000 - score * 20 >= 50) ? 1000 - score * 20 : 100;
+            s = 0;
+            speed = score + 120;
+            enemySpeed = score / 2 + 150;
+            numOfVisibleEnemies = (Math.floor(score * 1.2) + 50 > numOfEnemies) ? numOfEnemies : Math.floor(score * 1.2) + 50;
+            timeBetweenAttacks = (500 - Math.ceil(score * 1.8) >= 100) ? 500 - Math.ceil(score * 1.8) : 100;
             attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies));
             toStartAttacking = true;
         }
@@ -87,7 +100,9 @@ $(document).ready(function () {
                     easing: easingFunctions[(ind >= easingFunctions.length) ? ind % easingFunctions.length : ind], //"easeInBounce",
                     progress: function (a, p, ms) {
                         if (collision($(this), $(".ball"))) {
-                            s++;
+                            score--;
+                            $(".score span").text(score);
+                            console.log(score);
                             $(this).stop(true).fadeOut(500, function () {
                                 $(this).removeClass("visible");
                             });
@@ -107,20 +122,25 @@ $(document).ready(function () {
                                         $(this).next().animate({
                                             fontSize: 5 + "vw"
                                         }, 1000, "easeOutExpo", function () {
-                                            s = 0;
-                                            let wat = $(this)
-                                            t = setInterval(function () {
-                                                wat.find("span").text(s);
+                                            let tim,
+                                                s = 0,
+                                                waat = $(this);
+
+                                            function loop() {
+                                                s++;
+                                                tim = (s > score - 12) ? 200 : (s / score) * 75;
+                                                waat.find("span").text(s);
                                                 if (gainPointAud.paused) {
                                                     gainPointAud.play();
                                                 } else {
                                                     gainPointAud.currentTime = 0
                                                 }
-                                                s++;
+                                                let yo = setTimeout(loop, tim);
                                                 if (s > score) {
-                                                    clearInterval(t);
+                                                    clearTimeout(yo);
                                                 }
-                                            }, 100);
+                                            }
+                                            loop();
 
                                         });
                                     });
@@ -128,28 +148,16 @@ $(document).ready(function () {
                             }
                         }
                     },
-                    complete: function () {
+                    always: function () {
                         s++;
-                        if (s == numOfVisibleEnemies) {
-                            // you passed the wave
-                            s = score;
-                            score += 10;
-                            let t = setInterval(function () {
-                                $(".score span").text(s);
-                                if (gainPointAud.paused) {
-                                    gainPointAud.play();
-                                } else {
-                                    gainPointAud.currentTime = 0
-                                }
-                                s++;
-                                if (s > score) {
-                                    depassingWaveAud.play()
-                                    restartingVars();
-                                    detachingOldWaves();
-                                    appendindEnemies();
-                                    clearInterval(t);
-                                }
-                            }, 100);
+                        score++;
+                        $(".score span").text(score);
+
+                        if (s >= numOfVisibleEnemies && !(lives == 0)) {
+                            depassingWaveAud.play()
+                            restartingVars();
+                            detachingOldWaves();
+                            appendindEnemies();
                         }
                     }
                 });
@@ -159,8 +167,8 @@ $(document).ready(function () {
         $("html").contextmenu(function (e) {
 
             e.preventDefault();
-            let marginLeft = ($(window).width() - $(".gamecanvas").outerWidth()) / 2, // + 10 - 2
-                marginTop = ($(window).height() - $(".gamecanvas").outerHeight()) / 2; // + 10 - 2
+            let marginLeft = ($(window).width() - $(".gamecanvas").outerWidth()) / 2,
+                marginTop = ($(window).height() - $(".gamecanvas").outerHeight()) / 2;
             // ball movement.
             if (e.pageX >= marginLeft && e.pageX <= ($(".gamecanvas").outerWidth() + marginLeft) && e.pageY >= marginTop && e.pageY <= ($(".gamecanvas").outerHeight() + marginTop)) {
 

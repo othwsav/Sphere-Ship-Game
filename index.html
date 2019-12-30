@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="js/ball.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/ball.css">
 </head>
 <body>
@@ -16,13 +17,13 @@
         <div class="start">
             <h1 class="greeting">Welcome to My modest Kawaii game.</h1>
             <div class="rules">
-                <h4>Rules:</h4>
+                <h4>Rules:<span style="font-size: .6vw;">(Left click anywhere if you want to skip fadings)</span></h4>
                 <ol>
                     <li>You have a sphere ship that goes where you're right clicking.</li>
                     <li>There's waves of enemy's ships that you have to dodge them.</li>
-                    <li>After each wave you depass, you gain 10 score.</li>
+                    <li>After each wave you depass, you gain score as many ships you've dodged.</li>
                     <li>You have 3 lives, every time you get crushed by an enemy's ship you lose a life.</li>
-                    <li>the more score you earn the more waves get more dense and enemy's speed, your speed, the time between two attacks increase.</li>
+                    <li>The more score you earn the more waves get more dense and enemy's speed, your speed, the time between two attacks increase.</li>
                     <li>The waves will start once you move your sphere ship.</li>
                     <li>Rule N°6 means when a wave will finish the next one will not attack until you move to know that you're ready.</li>
                     <li>Click "START GAME" when you're ready.</li>
@@ -35,9 +36,6 @@
             <span class="number">2</span>
             <span class="number">1</span>
         </div>
-        <!-- <div class="results">
-            <span class="points"></span>
-        </div> -->
     </div>
     <div class="gamecanvas">
         <div class="waves"></div>
@@ -46,6 +44,9 @@
     </div>
     <div class="lives">Your lives: <span>❤️❤️❤️</span></div>
     <div class="score">Your score: <span>0</span></div>
+    <div class="musicswitch">
+        <i class="material-icons">volume_up</i>
+    </div>
     <div class="gameover">
         <h1>YOU LOST</h1>
         <span>Score: <span>0</span></span>
