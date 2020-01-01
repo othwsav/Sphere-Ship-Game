@@ -39,15 +39,15 @@ $(document).ready(function () {
             numOfEnemies = 100 / enemyWidth,
             numOfVisibleEnemies = (Math.floor(score * 1.2) + 50 > numOfEnemies) ? numOfEnemies : Math.floor(score * 1.2) + 50,
             timeBetweenAttacks = (500 - Math.ceil(score * 1.8) >= 100) ? 500 - Math.ceil(score * 1.8) : 100,
-            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies)),
+            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1),//new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies)),
             s = 0,
             toStartAttacking = true;
         const easingFunctions = ["linear", "swing", "easeInQuad", "easeOutQuad", "easeInOutQuad", "easeInCubic", "easeOutCubic", "easeInOutCubic", "easeInQuart", "easeOutQuart", "easeInOutQuart", "easeInQuint", "easeOutQuint", "easeInOutQuint", "easeInExpo", "easeOutExpo", "easeInOutExpo", "easeInSine", "easeOutSine", "easeInOutSine", "easeInCirc", "easeOutCirc", "easeInOutCirc", "easeInElastic", "easeOutElastic", "easeInOutElastic", "easeInBack", "easeOutBack", "easeInOutBack", "easeInBounce", "easeOutBounce", "easeInOutBounce"],
-            gameOverAud = new Audio("../music/Game Over.mp3"),
-            losingLifeAud = new Audio("../music/You lost a life.wav"),
-            gainPointAud = new Audio("../music/You gained a point.mp3"),
-            depassingWaveAud = new Audio("../music/You passed a wave.mp3"),
-            duringThePlay = new Audio("../music/during the play.m4a");
+            gameOverAud = new Audio("./music/Game Over.mp3"),
+            losingLifeAud = new Audio("./music/You lost a life.wav"),
+            gainPointAud = new Audio("./music/You gained a point.mp3"),
+            depassingWaveAud = new Audio("./music/You passed a wave.mp3"),
+            duringThePlay = new Audio("./music/during the play.m4a");
         // volume switcher code.
         $(".musicswitch").click(function () {
             $(this).find("i").toggleClass("red").text(($(this).find("i").text() == "volume_up") ? "volume_off" : "volume_up");
@@ -60,7 +60,7 @@ $(document).ready(function () {
             enemySpeed = score / 2 + 150;
             numOfVisibleEnemies = (Math.floor(score * 1.2) + 50 > numOfEnemies) ? numOfEnemies : Math.floor(score * 1.2) + 50;
             timeBetweenAttacks = (500 - Math.ceil(score * 1.8) >= 100) ? 500 - Math.ceil(score * 1.8) : 100;
-            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies));
+            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1),//new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies));
             toStartAttacking = true;
         }
         // appending enemies and distanging the visible ones.
