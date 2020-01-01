@@ -100,7 +100,7 @@ body{
 /* Game Canvas styling and all the divs inside Waves, Steps, Ball */
 /* Start */
 .gamecanvas{
-    width: 85vw;
+    width: 1636px;
     height: 85vh;
     margin: auto;
     border: 2px solid black;
