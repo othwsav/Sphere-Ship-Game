@@ -1,20 +1,34 @@
 $(document).ready(function () {
+    $(".gameover button").click(function (){
+        window.location.reload();
+    });
+    // adjusting gamecanvas position depending on window size.
+    $(".gamecanvas").css("width", "85vw").width($(".gamecanvas").width());
+    $(".gamecanvas").css("height", "85vh").height($(".gamecanvas").height());
+
+    function editingTopPosition() {
+        $(".gamecanvas").css("top", `calc(${($(window).height() - $(".gamecanvas").height()) / 2}px - 2px)`);
+    }
+    editingTopPosition();
+    $(window).on("resize", function () {
+        editingTopPosition();
+    });
     // This is the first animation that displays menu and rules and start button:
     $(".anounce .start h1, .anounce .start h4, .anounce .start ol li, .anounce .start button").each(function (i) {
-        $(this).delay(3000 * i + 1000).animate({
+        $(this).delay(500 * i + 500).animate({
             opacity: "1"
         }, 500);
     });
     // I added this to make it faster to enter a game for the ones who've read the rules.
-    $(".anounce .start").click(function (){
-        $(this).find("button").css("opacity","1");
+    $(".anounce .start").click(function () {
+        $(this).find("button").css("opacity", "1");
     });
     // What happens if The user clicks on start game button:
     $(".anounce .start button").on("click", function () {
         //fading out start menu.
         $(".anounce .start").fadeOut(400, function () {
             // running a countdown from 3 then fade out the whole menu to start the game.
-            $(".anounce").click(function (){
+            $(".anounce").click(function () {
                 $(this).fadeOut();
                 duringThePlay.loop = true;
                 duringThePlay.play();
@@ -39,7 +53,7 @@ $(document).ready(function () {
             numOfEnemies = 100 / enemyWidth,
             numOfVisibleEnemies = (Math.floor(score * 1.2) + 50 > numOfEnemies) ? numOfEnemies : Math.floor(score * 1.2) + 50,
             timeBetweenAttacks = (500 - Math.ceil(score * 1.8) >= 100) ? 500 - Math.ceil(score * 1.8) : 100,
-            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1),//new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies)),
+            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1), //new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies)),
             s = 0,
             toStartAttacking = true;
         const easingFunctions = ["linear", "swing", "easeInQuad", "easeOutQuad", "easeInOutQuad", "easeInCubic", "easeOutCubic", "easeInOutCubic", "easeInQuart", "easeOutQuart", "easeInOutQuart", "easeInQuint", "easeOutQuint", "easeInOutQuint", "easeInExpo", "easeOutExpo", "easeInOutExpo", "easeInSine", "easeOutSine", "easeInOutSine", "easeInCirc", "easeOutCirc", "easeInOutCirc", "easeInElastic", "easeOutElastic", "easeInOutElastic", "easeInBack", "easeOutBack", "easeInOutBack", "easeInBounce", "easeOutBounce", "easeInOutBounce"],
@@ -60,8 +74,8 @@ $(document).ready(function () {
             enemySpeed = score / 2 + 150;
             numOfVisibleEnemies = (Math.floor(score * 1.2) + 50 > numOfEnemies) ? numOfEnemies : Math.floor(score * 1.2) + 50;
             timeBetweenAttacks = (500 - Math.ceil(score * 1.8) >= 100) ? 500 - Math.ceil(score * 1.8) : 100;
-            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1),//new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies));
-            toStartAttacking = true;
+            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1), //new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies));
+                toStartAttacking = true;
         }
         // appending enemies and distanging the visible ones.
         function appendindEnemies() {
@@ -122,13 +136,14 @@ $(document).ready(function () {
                                         $(this).next().animate({
                                             fontSize: 5 + "vw"
                                         }, 1000, "easeOutExpo", function () {
+                                            $(this).next().fadeIn(500);
                                             let tim,
                                                 s = 0,
                                                 waat = $(this);
 
                                             function loop() {
                                                 s++;
-                                                tim = (s > score - 12) ? 200 : (s / score) * 75;
+                                                tim = (s > score - 10) ? 100 : (s > score - 5) ? 200 : (s / score) * 10;
                                                 waat.find("span").text(s);
                                                 if (gainPointAud.paused) {
                                                     gainPointAud.play();
@@ -137,6 +152,8 @@ $(document).ready(function () {
                                                 }
                                                 let yo = setTimeout(loop, tim);
                                                 if (s > score) {
+                                                    $(".gameover button").css("cursor", "pointer");
+                                                    $(".gameover button").prop("disabled", false);
                                                     clearTimeout(yo);
                                                 }
                                             }
@@ -164,6 +181,7 @@ $(document).ready(function () {
             });
         }
         appendindEnemies();
+
         $("html").contextmenu(function (e) {
 
             e.preventDefault();
