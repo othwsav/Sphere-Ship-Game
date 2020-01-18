@@ -7,3 +7,4 @@
 5. the more score you earn the more waves get more dense and enemy's speed, your speed, the time between two attacks increase.
 6. The waves will start once you move your sphere ship.
 7. Rule N°6 means when a wave will finish the next one will not attack until you move to know that you're ready.
+8. The gameCanvas dimensions depend on the window's ones at the time you enter the game.
