@@ -7,7 +7,7 @@
     <title>Sphere</title>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <script src="js/ball.min.js"></script>
+    <script src="js/ball.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/ball.css">
@@ -22,10 +22,11 @@
                     <li>You have a sphere ship that goes where you're right clicking.</li>
                     <li>There's waves of enemy's ships that you have to dodge them.</li>
                     <li>After each wave you depass, you gain score as many ships you've dodged.</li>
-                    <li>You have 3 lives, every time you get crushed by an enemy's ship you lose a life.</li>
+                    <li>You have 3 lives, everytime you get crushed by an enemy's ship you lose a life.</li>
                     <li>The more score you earn the more waves get more dense and enemy's speed, your speed, the time between two attacks increase.</li>
                     <li>The waves will start once you move your sphere ship.</li>
                     <li>Rule N°6 means when a wave will finish the next one will not attack until you move to know that you're ready.</li>
+                    <li>The gameCanvas dimensions depend on the window's ones at the time you enter the game.</li>
                     <li>Click "START GAME" when you're ready.</li>
                 </ol>
             </div>
@@ -50,6 +51,7 @@
     <div class="gameover">
         <h1>YOU LOST</h1>
         <span>Score: <span>0</span></span>
+        <button disabled>TRY AGAIN</button>
     </div>
 </body>
 </html>
