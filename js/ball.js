@@ -74,7 +74,7 @@ $(document).ready(function () {
             enemySpeed = score / 2 + 150;
             numOfVisibleEnemies = (Math.floor(score * 1.2) + 50 > numOfEnemies) ? numOfEnemies : Math.floor(score * 1.2) + 50;
             timeBetweenAttacks = (500 - Math.ceil(score * 1.8) >= 100) ? 500 - Math.ceil(score * 1.8) : 100;
-            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1), //new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies));
+            attackOrder = new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => Math.round((Math.random() * numOfVisibleEnemies * 2) - numOfVisibleEnemies)),//new Array(numOfVisibleEnemies).fill("").map((e, i) => i + 1).sort(() => (Math.random() * 2) - 1), ;
                 toStartAttacking = true;
         }
         // appending enemies and distanging the visible ones.
